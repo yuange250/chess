@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chessMan>
+	<commander>
+		<X>5</X>
+		<Y>1</Y>
+		<kind>1</kind>
+		<country>0</country>
+		<sourceImage>"images/BK.GIF"</sourceImage>
+	</commander>
+	
+	<bodyGuard>
+		<X>4</X>
+		<Y>1</Y>
+		<kind>2</kind>
+		<country>0</country>
+		<sourceImage>"images/BA.GIF"</sourceImage>
+	</bodyGuard>
+	
+	<minister>
+		<X>3</X>
+		<Y>1</Y>
+		<kind>3</kind>
+		<country>0</country>
+		<sourceImage>"images/BB.GIF"</sourceImage>
+	</minister>
+	
+	<cavalry>
+		<X>2</X>
+		<Y>1</Y>
+		<kind>4</kind>
+		<country>0</country>
+		<sourceImage>"images/BN.GIF"</sourceImage>
+	</cavalry>
+	
+	<tank>
+		<X>1</X>
+		<Y>1</Y>
+		<kind>5</kind>
+		<country>0</country>
+		<sourceImage>"images/BR.GIF"</sourceImage>
+	</tank>
+	
+	<canon>
+		<X>2</X>
+		<Y>3</Y>
+		<kind>6</kind>
+		<country>0</country>
+		<sourceImage>"images/BC.GIF"</sourceImage>
+	</canon>
+	
+	<soilder_middle>
+		<X>5</X>
+		<Y>4</Y>
+		<kind>7</kind>
+		<country>0</country>
+		<sourceImage>"images/BP.GIF"</sourceImage>
+	</soilder_middle>
+	
+	<soilder_half_middle>
+		<X>3</X>
+		<Y>4</Y>
+		<kind>7</kind>
+		<country>0</country>
+		<sourceImage>"images/BP.GIF"</sourceImage>
+	</soilder_half_middle>
+		
+	<soilder_side>
+		<X>1</X>
+		<Y>4</Y>
+		<kind>7</kind>
+		<country>0</country>
+		<sourceImage>"images/BP.GIF"</sourceImage>
+	</soilder_side>
+</chessMan>
