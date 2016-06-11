@@ -7,16 +7,35 @@ public class MoveStep {
 	private ChessMan role=null;
 	private int to_X=0;
 	private int to_Y=0;
+	private int weight=0;
 	public MoveStep(int type,int from_X,int from_Y,ChessMan role){
 		this.type=type;
 		this.from_X=from_X;
 		this.from_Y=from_Y;
 		this.role=role;
 	}
+	public MoveStep(int Type,int from_X,int from_Y,ChessMan role,int to_X,int to_Y,int weight)
+	{
+		this.type=type;
+		this.from_X=from_X;
+		this.from_Y=from_Y;
+		this.role=role;
+		this.to_X=to_X;
+		this.to_Y=to_Y;
+		this.weight=weight;
+	}
+	public MoveStep(int Weight)
+	{
+		this.weight=Weight;
+	}
 	public void setToXY(int to_X,int to_Y)
 	{
 		this.to_X=to_X;
 		this.to_Y=to_Y;
+	}
+	public void setWeight(int weight)
+	{
+		this.weight=weight;
 	}
 	public int getFromX()
 	{
@@ -42,5 +61,10 @@ public class MoveStep {
 	{
 		return this.role;
 	}
-	
+	public int getWeight(){
+		return this.weight;
+	}
+	public String toString(){
+		return this.from_X+" "+this.from_Y+" "+this.to_X+" "+this.to_Y+" "+this.role;
+	}
 }

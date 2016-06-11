@@ -62,8 +62,15 @@ public class MainFrame extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
-	public void markNextStepChoice(ChessMan cm)//give all move choices of a chessman
+	public void moveChessMan(Node nodeMove,int to_X,int to_Y){
+		chessBoard.setNode(to_X, to_Y, nodeMove);
+		chessBoard.setNode(nodeMove.getChessMan().getX(), nodeMove.getChessMan().getY(), null);
+		nodeMove.getChessMan().setXY(to_X, to_Y);
+	}
+	public int[][] markNextStepChoice(ChessMan cm)//give all move choices of a chessman
 	{
+		int next[][]=new int[2][20];
+		int length=0;
 		for(int i=0;i<10;i++)
 			Arrays.fill(nextMoves[i], 0);
 		int cm_X=cm.getX();
@@ -76,17 +83,33 @@ public class MainFrame extends JFrame{
 			{
 				Node temp=chessBoard.getNode(cm_X+1,cm_Y);
 				if(temp==null)
+				{
 					nextMoves[cm_X+1][cm_Y]=1;
+					next[0][length]=cm_X+1;
+					next[1][length++]=cm_Y;
+				}
 				else if(temp.getChessMan().getCountry()!=cm_country)
+				{	
 					nextMoves[cm_X+1][cm_Y]=1;
+					next[0][length]=cm_X+1;
+					next[1][length++]=cm_Y;
+				}
 			}
 			if(cm_X-1>=4)
 			{
 				Node temp=chessBoard.getNode(cm_X-1,cm_Y);
 				if(temp==null)
+				{
 					nextMoves[cm_X-1][cm_Y]=1;
+					next[0][length]=cm_X-1;
+					next[1][length++]=cm_Y;
+				}
 				else if(temp.getChessMan().getCountry()!=cm_country)
+				{	
 					nextMoves[cm_X-1][cm_Y]=1;
+					next[0][length]=cm_X-1;
+					next[1][length++]=cm_Y;
+				}
 			}
 			if(cm_country==0)
 			{
@@ -94,17 +117,33 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X,cm_Y+1);
 					if(temp==null)
+					{
 						nextMoves[cm_X][cm_Y+1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y+1;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X][cm_Y+1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y+1;
+					}
 				}
 				if(cm_Y-1>=1)
 				{
 					Node temp=chessBoard.getNode(cm_X,cm_Y-1);
 					if(temp==null)
+					{
 						nextMoves[cm_X][cm_Y-1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y-1;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X][cm_Y-1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y-1;
+					}
 				}
 				Node temp=null;
 				for(int y=cm_Y+1;temp==null&&y<=10;y++)//commander vs commander
@@ -115,6 +154,8 @@ public class MainFrame extends JFrame{
 						if(temp.getChessMan().getKind()==1)
 						{
 							nextMoves[cm_X][y]=1;
+							next[0][length]=cm_X;
+							next[1][length++]=y;
 							break;
 						}
 					}
@@ -127,17 +168,33 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X,cm_Y+1);
 					if(temp==null)
+					{
 						nextMoves[cm_X][cm_Y+1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y+1;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X][cm_Y+1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y+1;
+					}
 				}
 				if(cm_Y-1>=8)
 				{
 					Node temp=chessBoard.getNode(cm_X,cm_Y-1);
 					if(temp==null)
+					{
 						nextMoves[cm_X][cm_Y-1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y-1;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X][cm_Y-1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y-1;
+					}
 				}
 				Node temp=null;
 				for(int y=cm_Y-1;temp==null&&y<=10;y--)//commander vs commander
@@ -148,6 +205,8 @@ public class MainFrame extends JFrame{
 						if(temp.getChessMan().getKind()==1)
 						{
 							nextMoves[cm_X][y]=1;
+							next[0][length]=cm_X;
+							next[1][length++]=y;
 							break;
 						}
 					}
@@ -163,33 +222,65 @@ public class MainFrame extends JFrame{
 			{
 				Node temp=chessBoard.getNode(cm_X+1,cm_Y+1);
 				if(temp==null)
+				{
 					nextMoves[cm_X+1][cm_Y+1]=1;
+					next[0][length]=cm_X+1;
+					next[1][length++]=cm_Y+1;
+				}
 				else if(temp.getChessMan().getCountry()!=cm_country)
+				{	
 					nextMoves[cm_X+1][cm_Y+1]=1;
+					next[0][length]=cm_X+1;
+					next[1][length++]=cm_Y+1;
+				}
 			}
 			if(cm_X-1>=4&&cm_Y+1<=y_MAX)
 			{
 				Node temp=chessBoard.getNode(cm_X-1,cm_Y+1);
 				if(temp==null)
+				{
 					nextMoves[cm_X-1][cm_Y+1]=1;
+					next[0][length]=cm_X-1;
+					next[1][length++]=cm_Y+1;
+				}
 				else if(temp.getChessMan().getCountry()!=cm_country)
+				{	
 					nextMoves[cm_X-1][cm_Y+1]=1;
+					next[0][length]=cm_X-1;
+					next[1][length++]=cm_Y+1;
+				}
 			}
 			if(cm_X+1<=6&&cm_Y-1>=y_MIN)
 			{
 				Node temp=chessBoard.getNode(cm_X+1,cm_Y-1);
 				if(temp==null)
+				{
 					nextMoves[cm_X+1][cm_Y-1]=1;
+					next[0][length]=cm_X+1;
+					next[1][length++]=cm_Y-1;
+				}
 				else if(temp.getChessMan().getCountry()!=cm_country)
+				{	
 					nextMoves[cm_X+1][cm_Y-1]=1;
+					next[0][length]=cm_X+1;
+					next[1][length++]=cm_Y-1;
+				}
 			}
 			if(cm_X-1>=4&&cm_Y-1>=y_MIN)
 			{
 				Node temp=chessBoard.getNode(cm_X-1,cm_Y-1);
 				if(temp==null)
+				{
 					nextMoves[cm_X-1][cm_Y-1]=1;
+					next[0][length]=cm_X-1;
+					next[1][length++]=cm_Y-1;
+				}
 				else if(temp.getChessMan().getCountry()!=cm_country)
+				{	
 					nextMoves[cm_X-1][cm_Y-1]=1;
+					next[0][length]=cm_X-1;
+					next[1][length++]=cm_Y-1;
+				}
 			}
 		}
 		
@@ -205,9 +296,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X+2,cm_Y+2);
 					if(temp==null)
+					{
 						nextMoves[cm_X+2][cm_Y+2]=1;
+						next[0][length]=cm_X+2;
+						next[1][length++]=cm_Y+2;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X+2][cm_Y+2]=1;
+						next[0][length]=cm_X+2;
+						next[1][length++]=cm_Y+2;
+					}
 				}
 			}
 			if(cm_X-2>=1&&cm_Y+2<=y_MAX)
@@ -218,9 +317,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X-2,cm_Y+2);
 					if(temp==null)
+					{
 						nextMoves[cm_X-2][cm_Y+2]=1;
+						next[0][length]=cm_X-2;
+						next[1][length++]=cm_Y+2;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X-2][cm_Y+2]=1;
+						next[0][length]=cm_X-2;
+						next[1][length++]=cm_Y+2;
+					}
 				}
 			}
 			if(cm_X+2<=9&&cm_Y-2>=y_MIN)
@@ -231,9 +338,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X+2,cm_Y-2);
 					if(temp==null)
+					{
 						nextMoves[cm_X+2][cm_Y-2]=1;
+						next[0][length]=cm_X+2;
+						next[1][length++]=cm_Y-2;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X+2][cm_Y-2]=1;
+						next[0][length]=cm_X+2;
+						next[1][length++]=cm_Y-2;
+					}
 				}
 			}
 			if(cm_X-2>=1&&cm_Y-2>=y_MIN)
@@ -243,9 +358,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X-2,cm_Y-2);
 					if(temp==null)
+					{
 						nextMoves[cm_X-2][cm_Y-2]=1;
+						next[0][length]=cm_X-2;
+						next[1][length++]=cm_Y-2;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X-2][cm_Y-2]=1;
+						next[0][length]=cm_X-2;
+						next[1][length++]=cm_Y-2;
+					}
 				}
 			}
 		}
@@ -259,9 +382,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X+2,cm_Y+1);
 					if(temp==null)
+					{
 						nextMoves[cm_X+2][cm_Y+1]=1;
+						next[0][length]=cm_X+2;
+						next[1][length++]=cm_Y+1;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X+2][cm_Y+1]=1;
+						next[0][length]=cm_X+2;
+						next[1][length++]=cm_Y+1;
+					}
 				}
 			}
 			if(cm_X+2<=9&&cm_Y-1>=1)
@@ -271,9 +402,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X+2,cm_Y-1);
 					if(temp==null)
+					{
 						nextMoves[cm_X+2][cm_Y-1]=1;
+						next[0][length]=cm_X+2;
+						next[1][length++]=cm_Y-1;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X+2][cm_Y-1]=1;
+						next[0][length]=cm_X+2;
+						next[1][length++]=cm_Y-1;
+					}
 				}
 			}
 			if(cm_X-2>=1&&cm_Y+1<=10)
@@ -283,9 +422,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X-2,cm_Y+1);
 					if(temp==null)
+					{
 						nextMoves[cm_X-2][cm_Y+1]=1;
+						next[0][length]=cm_X-2;
+						next[1][length++]=cm_Y-1;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X-2][cm_Y+1]=1;
+						next[0][length]=cm_X-2;
+						next[1][length++]=cm_Y-1;
+					}
 				}
 			}
 			if(cm_X-2>=1&&cm_Y-1>=1)
@@ -295,9 +442,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X-2,cm_Y-1);
 					if(temp==null)
+					{
 						nextMoves[cm_X-2][cm_Y-1]=1;
+						next[0][length]=cm_X-2;
+						next[1][length++]=cm_Y-1;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X-2][cm_Y-1]=1;
+						next[0][length]=cm_X-2;
+						next[1][length++]=cm_Y-1;
+					}
 				}
 			}
 			if(cm_X+1<=9&&cm_Y+2<=10)
@@ -307,9 +462,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X+1,cm_Y+2);
 					if(temp==null)
+					{
 						nextMoves[cm_X+1][cm_Y+2]=1;
+						next[0][length]=cm_X+1;
+						next[1][length++]=cm_Y+2;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X+1][cm_Y+2]=1;
+						next[0][length]=cm_X+1;
+						next[1][length++]=cm_Y+2;
+					}
 				}
 			}
 			if(cm_X+1<=9&&cm_Y-2>=1)
@@ -319,9 +482,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X+1,cm_Y-2);
 					if(temp==null)
+					{
 						nextMoves[cm_X+1][cm_Y-2]=1;
+						next[0][length]=cm_X+1;
+						next[1][length++]=cm_Y-2;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X+1][cm_Y-2]=1;
+						next[0][length]=cm_X+1;
+						next[1][length++]=cm_Y-2;
+					}
 				}
 			}
 			if(cm_X-1>=1&&cm_Y+2<=10)
@@ -331,9 +502,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X-1,cm_Y+2);
 					if(temp==null)
+					{
 						nextMoves[cm_X-1][cm_Y+2]=1;
+						next[0][length]=cm_X-1;
+						next[1][length++]=cm_Y+2;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X-1][cm_Y+2]=1;
+						next[0][length]=cm_X-1;
+						next[1][length++]=cm_Y+2;
+					}
 				}
 			}
 			if(cm_X-1>=1&&cm_Y-2>=1)
@@ -343,9 +522,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X-1,cm_Y-2);
 					if(temp==null)
+					{
 						nextMoves[cm_X-1][cm_Y-2]=1;
+						next[0][length]=cm_X-1;
+						next[1][length++]=cm_Y-2;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{	
 						nextMoves[cm_X-1][cm_Y-2]=1;
+						next[0][length]=cm_X-1;
+						next[1][length++]=cm_Y-2;
+					}
 				}
 			}
 		}
@@ -356,10 +543,16 @@ public class MainFrame extends JFrame{
 			{
 				Node temp=chessBoard.getNode(x_temp,cm_Y);
 				if(temp==null)
+				{
 					nextMoves[x_temp][cm_Y]=1;
+					next[0][length]=x_temp;
+					next[1][length++]=cm_Y;
+				}
 				else if(temp.getChessMan().getCountry()!=cm_country)
 				{
 					nextMoves[x_temp][cm_Y]=1;
+					next[0][length]=x_temp;
+					next[1][length++]=cm_Y;
 					break;
 				}
 				else
@@ -370,10 +563,16 @@ public class MainFrame extends JFrame{
 			{
 				Node temp=chessBoard.getNode(x_temp,cm_Y);
 				if(temp==null)
+				{
 					nextMoves[x_temp][cm_Y]=1;
+					next[0][length]=x_temp;
+					next[1][length++]=cm_Y;
+				}
 				else if(temp.getChessMan().getCountry()!=cm_country)
 				{
 					nextMoves[x_temp][cm_Y]=1;
+					next[0][length]=x_temp;
+					next[1][length++]=cm_Y;
 					break;
 				}
 				else
@@ -384,10 +583,16 @@ public class MainFrame extends JFrame{
 			{
 				Node temp=chessBoard.getNode(cm_X,y_temp);
 				if(temp==null)
+				{
 					nextMoves[cm_X][y_temp]=1;
+					next[0][length]=cm_X;
+					next[1][length++]=y_temp;
+				}
 				else if(temp.getChessMan().getCountry()!=cm_country)
 				{
 					nextMoves[cm_X][y_temp]=1;
+					next[0][length]=cm_X;
+					next[1][length++]=y_temp;
 					break;
 				}
 				else
@@ -398,10 +603,16 @@ public class MainFrame extends JFrame{
 			{
 				Node temp=chessBoard.getNode(cm_X,y_temp);
 				if(temp==null)
+				{
 					nextMoves[cm_X][y_temp]=1;
+					next[0][length]=cm_X;
+					next[1][length++]=y_temp;
+				}
 				else if(temp.getChessMan().getCountry()!=cm_country)
 				{
 					nextMoves[cm_X][y_temp]=1;
+					next[0][length]=cm_X;
+					next[1][length++]=y_temp;
 					break;
 				}
 				else
@@ -416,7 +627,11 @@ public class MainFrame extends JFrame{
 			{
 				Node temp=chessBoard.getNode(x_temp,cm_Y);
 				if(temp==null&&flag==false)
+				{
 					nextMoves[x_temp][cm_Y]=1;
+					next[0][length]=x_temp;
+					next[1][length++]=cm_Y;
+				}
 				else if(temp!=null&&flag==false)
 					flag=true;
 				else if(temp==null&&flag==true)
@@ -424,7 +639,11 @@ public class MainFrame extends JFrame{
 				else if(temp!=null&&flag==true)
 				{
 					if(temp.getChessMan().getCountry()!=cm_country)
+					{
 						nextMoves[x_temp][cm_Y]=1;
+						next[0][length]=x_temp;
+						next[1][length++]=cm_Y;
+					}
 					break;
 				}
 			}
@@ -433,7 +652,11 @@ public class MainFrame extends JFrame{
 			{
 				Node temp=chessBoard.getNode(x_temp,cm_Y);
 				if(temp==null&&flag==false)
+				{
 					nextMoves[x_temp][cm_Y]=1;
+					next[0][length]=x_temp;
+					next[1][length++]=cm_Y;
+				}
 				else if(temp!=null&&flag==false)
 					flag=true;
 				else if(temp==null&&flag==true)
@@ -441,7 +664,11 @@ public class MainFrame extends JFrame{
 				else if(temp!=null&&flag==true)
 				{
 					if(temp.getChessMan().getCountry()!=cm_country)
+					{
 						nextMoves[x_temp][cm_Y]=1;
+						next[0][length]=x_temp;
+						next[1][length++]=cm_Y;
+					}
 					break;
 				}
 			}
@@ -450,7 +677,11 @@ public class MainFrame extends JFrame{
 			{
 				Node temp=chessBoard.getNode(cm_X,y_temp);
 				if(temp==null&&flag==false)
+				{
 					nextMoves[cm_X][y_temp]=1;
+					next[0][length]=cm_X;
+					next[1][length++]=y_temp;
+				}
 				else if(temp!=null&&flag==false)
 					flag=true;
 				else if(temp==null&&flag==true)
@@ -458,7 +689,11 @@ public class MainFrame extends JFrame{
 				else if(temp!=null&&flag==true)
 				{
 					if(temp.getChessMan().getCountry()!=cm_country)
+					{
 						nextMoves[cm_X][y_temp]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=y_temp;
+					}
 					break;
 				}
 			}
@@ -467,7 +702,11 @@ public class MainFrame extends JFrame{
 			{
 				Node temp=chessBoard.getNode(cm_X,y_temp);
 				if(temp==null&&flag==false)
+				{
 					nextMoves[cm_X][y_temp]=1;
+					next[0][length]=cm_X;
+					next[1][length++]=y_temp;
+				}
 				else if(temp!=null&&flag==false)
 					flag=true;
 				else if(temp==null&&flag==true)
@@ -475,7 +714,11 @@ public class MainFrame extends JFrame{
 				else if(temp!=null&&flag==true)
 				{
 					if(temp.getChessMan().getCountry()!=cm_country)
+					{
 						nextMoves[cm_X][y_temp]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=y_temp;
+					}
 					break;
 				}
 			}
@@ -489,9 +732,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X,cm_Y+1);
 					if(temp==null)
+					{
 						nextMoves[cm_X][cm_Y+1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y+1;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{
 						nextMoves[cm_X][cm_Y+1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y+1;
+					}
 				}
 				else
 				{
@@ -499,25 +750,49 @@ public class MainFrame extends JFrame{
 					{
 						Node temp=chessBoard.getNode(cm_X,cm_Y+1);
 						if(temp==null)
+						{
 							nextMoves[cm_X][cm_Y+1]=1;
+							next[0][length]=cm_X;
+							next[1][length++]=cm_Y+1;
+						}
 						else if(temp.getChessMan().getCountry()!=cm_country)
+						{
 							nextMoves[cm_X][cm_Y+1]=1;
+							next[0][length]=cm_X;
+							next[1][length++]=cm_Y+1;
+						}
 					}
 					if(cm_X-1>=1)
 					{
 						Node temp=chessBoard.getNode(cm_X-1,cm_Y);
 						if(temp==null)
+						{
 							nextMoves[cm_X-1][cm_Y]=1;
+							next[0][length]=cm_X-1;
+							next[1][length++]=cm_Y;
+						}
 						else if(temp.getChessMan().getCountry()!=cm_country)
+						{
 							nextMoves[cm_X-1][cm_Y]=1;
+							next[0][length]=cm_X-1;
+							next[1][length++]=cm_Y;
+						}
 					}
 					if(cm_X+1<=9)
 					{
 						Node temp=chessBoard.getNode(cm_X+1,cm_Y);
 						if(temp==null)
+						{
 							nextMoves[cm_X+1][cm_Y]=1;
+							next[0][length]=cm_X+1;
+							next[1][length++]=cm_Y;
+						}
 						else if(temp.getChessMan().getCountry()!=cm_country)
+						{
 							nextMoves[cm_X+1][cm_Y]=1;
+							next[0][length]=cm_X+1;
+							next[1][length++]=cm_Y;
+						}
 					}
 				}
 			}
@@ -527,9 +802,17 @@ public class MainFrame extends JFrame{
 				{
 					Node temp=chessBoard.getNode(cm_X,cm_Y-1);
 					if(temp==null)
+					{
 						nextMoves[cm_X][cm_Y-1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y-1;
+					}
 					else if(temp.getChessMan().getCountry()!=cm_country)
+					{
 						nextMoves[cm_X][cm_Y-1]=1;
+						next[0][length]=cm_X;
+						next[1][length++]=cm_Y-1;
+					}
 				}
 				else
 				{
@@ -537,82 +820,127 @@ public class MainFrame extends JFrame{
 					{
 						Node temp=chessBoard.getNode(cm_X,cm_Y-1);
 						if(temp==null)
+						{
 							nextMoves[cm_X][cm_Y-1]=1;
+							next[0][length]=cm_X;
+							next[1][length++]=cm_Y-1;
+						}
 						else if(temp.getChessMan().getCountry()!=cm_country)
+						{
 							nextMoves[cm_X][cm_Y-1]=1;
+							next[0][length]=cm_X;
+							next[1][length++]=cm_Y-1;
+						}
 					}
 					if(cm_X-1>=1)
 					{
 						Node temp=chessBoard.getNode(cm_X-1,cm_Y);
 						if(temp==null)
+						{
 							nextMoves[cm_X-1][cm_Y]=1;
+							next[0][length]=cm_X-1;
+							next[1][length++]=cm_Y;
+						}
 						else if(temp.getChessMan().getCountry()!=cm_country)
+						{
 							nextMoves[cm_X-1][cm_Y]=1;
+							next[0][length]=cm_X-1;
+							next[1][length++]=cm_Y;
+						}
 					}
 					if(cm_X+1<=9)
 					{
 						Node temp=chessBoard.getNode(cm_X+1,cm_Y);
 						if(temp==null)
+						{
 							nextMoves[cm_X+1][cm_Y]=1;
+							next[0][length]=cm_X+1;
+							next[1][length++]=cm_Y;
+						}
 						else if(temp.getChessMan().getCountry()!=cm_country)
+						{
 							nextMoves[cm_X+1][cm_Y]=1;
+							next[0][length]=cm_X+1;
+							next[1][length++]=cm_Y;
+						}
 					}
 				}
 			}
 		}
+		return next;
 	}
 	class ChessBoardMouseListener implements MouseListener{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
 			int x_c=e.getX(),y_c=e.getY();
-		//	System.out.println("x: "+x_c+" y: "+y_c);
-			
-			int man_X=(x_c+block_Width/2-correct_X)/block_Width+1;
-			if(y_c>=330)
-				y_c-=25;
-			int man_Y=(y_c+block_Width/2-correct_Y)/block_Width+1;
-		//	System.out.println(i+" "+j);
-			if(man_X>9||man_X<1||man_Y>10||man_Y<1)
-				return;
-			Node temp=chessBoard.getNode(man_X, man_Y);
-			if(MOD==0&&temp.getChessMan().getCountry()==1)
-			{
-				if(temp!=null)
-				{
-					selected_X=man_X;
-					selected_Y=man_Y;
-					markNextStepChoice(temp.getChessMan());
-					MOD=1;
-					mp.repaint();
-				}
-			}
-			else if(MOD==1)
-			{
+			//	System.out.println("x: "+x_c+" y: "+y_c);
 				
-				if(nextMoves[man_X][man_Y]==1)
+				int man_X=(x_c+block_Width/2-correct_X)/block_Width+1;
+				if(y_c>=330)
+					y_c-=25;
+				int man_Y=(y_c+block_Width/2-correct_Y)/block_Width+1;
+			//	System.out.println(i+" "+j);
+				if(man_X>9||man_X<1||man_Y>10||man_Y<1)
+					return;
+				Node temp=chessBoard.getNode(man_X, man_Y);
+				if(MOD==0&&temp!=null&&temp.getChessMan().getCountry()==1)
 				{
-					Node selected=chessBoard.getNode(selected_X, selected_Y);
-					chessBoard.setNode(man_X, man_Y, selected);
-					chessBoard.setNode(selected_X, selected_Y, null);
-					selected.getChessMan().setXY(man_X, man_Y);
-					selected_X=man_X;
-					selected_Y=man_Y;
-					MOD=2;
-					mp.repaint();
+					if(temp!=null)
+					{
+						selected_X=man_X;
+						selected_Y=man_Y;
+						markNextStepChoice(temp.getChessMan());
+						MOD=1;
+						mp.repaint();
+					}
 				}
-				else if(temp!=null&&temp.getChessMan().getCountry()==1)
+				else if(MOD==1)
 				{
-					selected_X=man_X;
-					selected_Y=man_Y;
-					markNextStepChoice(temp.getChessMan());
-					mp.repaint();
+					
+					if(nextMoves[man_X][man_Y]==1)
+					{
+						Node selected=chessBoard.getNode(selected_X, selected_Y);
+						moveChessMan(selected, man_X, man_Y);
+						
+						selected_X=man_X;
+						selected_Y=man_Y;
+						mp.repaint();
+						
+						MoveStep ms=ai.giveNextMove();
+//						System.out.println("dddd");
+						System.out.println(ms+" weight:"+ms.getWeight());
+//						System.out.println(chessBoard);
+						Node toNode=chessBoard.getNode(ms.getToX(), ms.getToY());
+						if(toNode!=null)
+						{
+							MoveStep killed=new MoveStep(2,ms.getToX(),ms.getToY(),ms.getChessMan());
+							if(killed.getChessMan().getKind()==1)
+							{
+								MOD=3;
+							}
+							steps.add(killed);
+							steps.add(ms);					
+						}
+						selected_X=ms.getToX();
+						selected_Y=ms.getToY();
+						for(int i=0;i<10;i++)
+							Arrays.fill(nextMoves[i], 0);
+						moveChessMan(chessBoard.getNode(ms.getFromX(), ms.getFromY()), ms.getToX(), ms.getToY());
+						MOD=0;
+						
+						mp.repaint();
+						selected_X=-1;
+						selected_Y=-1;
+					}
+					else if(temp!=null&&temp.getChessMan().getCountry()==1)
+					{
+						selected_X=man_X;
+						selected_Y=man_Y;
+						markNextStepChoice(temp.getChessMan());
+						mp.repaint();
+					}
 				}
-			}
-			else if(MOD==2)
-			{
-				
-			}
 			
 		}
 
@@ -755,9 +1083,160 @@ public class MainFrame extends JFrame{
 				}
 			}
 		}
-//		public MoveStep giveNextMove(ChessBoard cb)//计算下一步啦！
-//		{
-//			
-//		}
+		public MoveStep giveNextMove()//计算下一步啦！
+		{
+			return max(4,false,0);
+		}
+		public MoveStep max(int floor,boolean cut_able,int thresold)
+		{
+			if(floor==0)
+			{
+				int totalWeight=countTotalWeight();
+				return new MoveStep(totalWeight);
+			}
+			Node temp=null;
+			ChessMan cm=null;
+			MoveStep ms=null;
+			int nextSteps[][]=null;
+			for(int i=1;i<=9;i++)
+			{
+				for(int j=1;j<=10;j++)
+				{
+					temp=chessBoard.getNode(i, j);
+					if(temp!=null)
+					{
+						cm=temp.getChessMan();
+						if(cm.getCountry()==0)
+						{
+							nextSteps=markNextStepChoice(cm);
+							for(int k=0;nextSteps[0][k]!=0;k++)
+							{
+								int to_X=nextSteps[0][k];
+								int to_Y=nextSteps[1][k];
+								int from_X=cm.getX();
+								int from_Y=cm.getY();
+								
+								Node killed=chessBoard.getNode(to_X, to_Y);
+								moveChessMan(temp,to_X,to_Y);
+								
+								MoveStep ms_temp=min(floor-1,(ms==null)?false:true,(ms==null)?0:ms.getWeight());//后面加上剪枝
+								
+								if(ms==null)
+								{
+									ms=new MoveStep(1,from_X,from_Y,cm,to_X,to_Y,ms_temp.getWeight());
+								}
+								else if(ms.getWeight()<ms_temp.getWeight())
+								{
+									ms=new MoveStep(1,from_X,from_Y,cm,to_X,to_Y,ms_temp.getWeight());
+								}
+								moveChessMan(temp,from_X,from_Y);
+								if(killed!=null)
+									chessBoard.setNode(to_X, to_Y, killed);
+								
+								if(ms!=null&&cut_able&&ms.getWeight()>thresold)
+								{
+									return ms;
+								}
+							}
+						}
+					}
+				}
+			}
+			return ms;
+		}
+		public MoveStep min(int floor,boolean cut_able,int thresold)
+		{
+			if(floor==0)
+			{
+				int totalWeight=countTotalWeight();
+				return new MoveStep(totalWeight);
+			}
+			Node temp=null;
+			ChessMan cm=null;
+			MoveStep ms=null;
+			int nextSteps[][]=null;
+			for(int i=1;i<=9;i++)
+			{
+				for(int j=1;j<=10;j++)
+				{
+					temp=chessBoard.getNode(i, j);
+					if(temp!=null)
+					{
+						cm=temp.getChessMan();
+						if(cm.getCountry()==1)
+						{
+							nextSteps=markNextStepChoice(cm);
+							for(int k=0;nextSteps[0][k]!=0;k++)
+							{
+								int to_X=nextSteps[0][k];
+								int to_Y=nextSteps[1][k];
+								int from_X=cm.getX();
+								int from_Y=cm.getY();
+								
+								Node killed=chessBoard.getNode(to_X, to_Y);
+								moveChessMan(temp,to_X,to_Y);
+								MoveStep ms_temp=max(floor-1,(ms==null)?false:true,(ms==null)?0:ms.getWeight());//后面加上剪枝
+								
+								if(ms==null)
+								{
+									ms=new MoveStep(1,from_X,from_Y,cm,to_X,to_Y,ms_temp.getWeight());
+								}
+								
+								else if(ms.getWeight()>ms_temp.getWeight())
+								{
+									ms=new MoveStep(1,from_X,from_Y,cm,to_X,to_Y,ms_temp.getWeight());
+								}
+								
+								
+								moveChessMan(temp,from_X,from_Y);
+								if(killed!=null)
+									chessBoard.setNode(to_X, to_Y, killed);
+								if(ms!=null&&cut_able&&ms.getWeight()<thresold)
+								{
+									return ms;
+								}
+							}
+						}
+					}
+				}
+			}
+			return ms;
+		}
+		public int countTotalWeight(){
+			int TotalWeight=0;
+			Node temp=null;
+			ChessMan chessman_temp=null;
+			int weight_temp=0;
+			for(int i=1;i<=9;i++)
+			{
+				for(int j=1;j<=10;j++)
+				{
+					temp=chessBoard.getNode(i, j);
+					if(temp!=null)
+					{
+						chessman_temp=temp.getChessMan();
+						switch(chessman_temp.getKind())
+						{
+							case 1:weight_temp=commander_weight[i][(chessman_temp.getCountry()==1)?j:11-j]*((chessman_temp.getCountry()==1)?-1:1);
+								   break;
+							case 2:weight_temp=bodyguard_weight[i][(chessman_temp.getCountry()==1)?j:11-j]*((chessman_temp.getCountry()==1)?-1:1);
+							   	   break;
+							case 3:weight_temp=minister_weight[i][(chessman_temp.getCountry()==1)?j:11-j]*((chessman_temp.getCountry()==1)?-1:1);
+						   	   	   break;
+							case 4:weight_temp=cavalry_weight[i][(chessman_temp.getCountry()==1)?j:11-j]*((chessman_temp.getCountry()==1)?-1:1);
+					   	   	       break;
+							case 5:weight_temp=tank_weight[i][(chessman_temp.getCountry()==1)?j:11-j]*((chessman_temp.getCountry()==1)?-1:1);
+					   	   	       break;
+							case 6:weight_temp=cannon_weight[i][(chessman_temp.getCountry()==1)?j:11-j]*((chessman_temp.getCountry()==1)?-1:1);
+					   	   	       break;
+							case 7:weight_temp=soilder_weight[i][(chessman_temp.getCountry()==1)?j:11-j]*((chessman_temp.getCountry()==1)?-1:1);
+					   	   	       break;
+						}
+						TotalWeight+=weight_temp;
+					}
+				}
+			}
+			return TotalWeight;
+		}
 	}
 }
