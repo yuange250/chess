@@ -56,4 +56,18 @@ public class ChessMan {
 		}
 		return cm;
 	}
+	public String toString()
+	{
+		String s=null;
+		switch(this.kind)
+		{
+			case 1:return s="commander";
+			case 2:return s="bodyguard";
+			case 3:return s="minister";
+			case 4:return s="cavalry";
+			case 5:return s="tank";
+			case 6:return s="cannon";
+			default:return s="soilder";
+		}
+	}
 }

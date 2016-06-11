@@ -65,6 +65,6 @@ public class MoveStep {
 		return this.weight;
 	}
 	public String toString(){
-		return this.from_X+" "+this.from_Y+" "+this.to_X+" "+this.to_Y+" "+this.role;
+		return "fromX:"+this.from_X+" fromY:"+this.from_Y+" toX:"+this.to_X+" toY:"+this.to_Y+" chessman:"+this.role;
 	}
 }

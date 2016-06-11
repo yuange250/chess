@@ -197,7 +197,7 @@ public class MainFrame extends JFrame{
 					}
 				}
 				Node temp=null;
-				for(int y=cm_Y-1;temp==null&&y<=10;y--)//commander vs commander
+				for(int y=cm_Y-1;temp==null&&y>=1;y--)//commander vs commander
 				{
 					temp=chessBoard.getNode(cm_X, y);
 					if(temp!=null)
@@ -907,6 +907,7 @@ public class MainFrame extends JFrame{
 						selected_Y=man_Y;
 						mp.repaint();
 						
+						MOD=2;
 						MoveStep ms=ai.giveNextMove();
 //						System.out.println("dddd");
 						System.out.println(ms+" weight:"+ms.getWeight());
@@ -930,8 +931,7 @@ public class MainFrame extends JFrame{
 						MOD=0;
 						
 						mp.repaint();
-						selected_X=-1;
-						selected_Y=-1;
+						
 					}
 					else if(temp!=null&&temp.getChessMan().getCountry()==1)
 					{
@@ -983,7 +983,7 @@ public class MainFrame extends JFrame{
 				image = ImageIO.read(new FileInputStream(chessBoardPath));
 				g.drawImage(image, 30, 30, image.getWidth()/2, image.getHeight()/2, null);
 				
-				if(MOD==1||MOD==0)
+				if(MOD==1||MOD==0||MOD==2)
 				{
 					BufferedImage selected_back_Ground=ImageIO.read(new FileInputStream("images/OOS.GIF"));
 					g.drawImage(selected_back_Ground, (selected_X-1)*block_Width+startPoint_X-block_Width/2, (selected_Y-1)*block_Width+startPoint_Y-block_Width/2+((selected_Y>=6)?25:0), block_Width, block_Width, null);
@@ -1085,7 +1085,7 @@ public class MainFrame extends JFrame{
 		}
 		public MoveStep giveNextMove()//计算下一步啦！
 		{
-			return max(4,false,0);
+			return max(4,false,0);//4是向下看的步数，也就是min-max的深度
 		}
 		public MoveStep max(int floor,boolean cut_able,int thresold)
 		{
